@@ -17,6 +17,10 @@ import android.graphics.Typeface;
     return null;
   }
 
+  public Typeface getFontByName(String fontName) {
+    return null;
+  }
+
   /**
    * Override this if you want to specify the asset path for a given font family.
    */
