@@ -1,8 +1,12 @@
 import net.ltgt.gradle.errorprone.CheckSeverity
+apply plugin: 'com.github.dcendents.android-maven'
 
 apply from: 'gradle-maven-push.gradle'
 apply plugin: 'com.android.library'
 apply plugin: 'net.ltgt.errorprone'
+
+group='com.github.nihad92'
+
 
 android {
   compileSdkVersion 28

@@ -9,6 +9,7 @@ import android.view.View;
 
 import com.airbnb.lottie.FontAssetDelegate;
 import com.airbnb.lottie.L;
+import com.airbnb.lottie.model.Font;
 import com.airbnb.lottie.model.MutablePair;
 import com.airbnb.lottie.utils.Logger;
 
@@ -52,42 +53,46 @@ public class FontAssetManager {
     this.defaultFontFileExtension = defaultFontFileExtension;
   }
 
-  public Typeface getTypeface(String fontFamily, String style) {
-    tempPair.set(fontFamily, style);
+  public Typeface getTypeface(Font font) {
+    tempPair.set(font.getFamily(), font.getStyle());
     Typeface typeface = fontMap.get(tempPair);
     if (typeface != null) {
       return typeface;
     }
-    Typeface typefaceWithDefaultStyle = getFontFamily(fontFamily);
-    typeface = typefaceForStyle(typefaceWithDefaultStyle, style);
+    Typeface typefaceWithDefaultStyle = getFontFamily(font);
+    typeface = typefaceForStyle(typefaceWithDefaultStyle, font.getStyle());
     fontMap.put(tempPair, typeface);
     return typeface;
   }
 
-  private Typeface getFontFamily(String fontFamily) {
-    Typeface defaultTypeface = fontFamilies.get(fontFamily);
+  private Typeface getFontFamily(Font font) {
+    Typeface defaultTypeface = fontFamilies.get(font.getFamily());
     if (defaultTypeface != null) {
       return defaultTypeface;
     }
 
     Typeface typeface = null;
     if (delegate != null) {
-      typeface = delegate.fetchFont(fontFamily);
+      typeface = delegate.getFontByName(font.getName());
     }
 
     if (delegate != null && typeface == null) {
-      String path = delegate.getFontPath(fontFamily);
+      typeface = delegate.fetchFont(font.getFamily());
+    }
+
+    if (delegate != null && typeface == null) {
+      String path = delegate.getFontPath(font.getFamily());
       if (path != null) {
         typeface = Typeface.createFromAsset(assetManager, path);
       }
     }
 
     if (typeface == null) {
-      String path = "fonts/" + fontFamily + defaultFontFileExtension;
+      String path = "fonts/" + font.getFamily() + defaultFontFileExtension;
       typeface = Typeface.createFromAsset(assetManager, path);
     }
 
-    fontFamilies.put(fontFamily, typeface);
+    fontFamilies.put(font.getFamily(), typeface);
     return typeface;
   }
 
