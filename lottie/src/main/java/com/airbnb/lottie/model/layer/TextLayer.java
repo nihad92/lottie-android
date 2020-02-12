@@ -235,7 +235,7 @@ public class TextLayer extends BaseLayer {
   private void drawTextWithFont(
       DocumentData documentData, Font font, Matrix parentMatrix, Canvas canvas) {
     float parentScale = Utils.getScale(parentMatrix);
-    Typeface typeface = lottieDrawable.getTypeface(font.getFamily(), font.getStyle());
+    Typeface typeface = lottieDrawable.getTypeface(font);
     if (typeface == null) {
       return;
     }
