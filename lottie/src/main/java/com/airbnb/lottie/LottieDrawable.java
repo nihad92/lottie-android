@@ -1075,7 +1075,7 @@ public class LottieDrawable extends Drawable implements Drawable.Callback, Anima
   }
 
   private FontAssetManager getFontAssetManager() {
-    if (getCallback() == null) {
+    if (getCallback() == null && fontAssetDelegate == null) {
       // We can't get a bitmap since we can't get a Context from the callback.
       return null;
     }
