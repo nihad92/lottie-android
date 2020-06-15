@@ -66,7 +66,7 @@ public class FontAssetManager {
   }
 
   private Typeface getFontFamily(Font font) {
-    Typeface defaultTypeface = fontFamilies.get(font.getFamily());
+    Typeface defaultTypeface = fontFamilies.get(font.getName());
     if (defaultTypeface != null) {
       return defaultTypeface;
     }
